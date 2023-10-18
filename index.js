@@ -9,6 +9,12 @@ app.use(cors());
 app.use(express.json());
 
 
+// DB_USER=brandShopMaster
+// DB_PASS=19EJRImILgZEYXGH
+
+// node_modules
+// .env
+
 // brandShopMaster
 // 19EJRImILgZEYXGH
 
