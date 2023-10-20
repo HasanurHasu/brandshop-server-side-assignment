@@ -51,6 +51,14 @@ async function run() {
             res.send(result);
         })
 
+        app.put('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = {_id: new ObjectId(id)};
+            const options = { upsert: true };
+            const updateProduct = req.body;
+            console.log(updateProduct);
+        })
+
         app.post('/products', async(req, res) => {
             const newProduct = req.body;
             console.log(newProduct);
