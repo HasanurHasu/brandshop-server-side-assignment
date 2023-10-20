@@ -37,8 +37,9 @@ async function run() {
         await client.connect();
 
         const brandShopCollections = client.db('brandShopDB').collection('brandShop');
+        const brandShopUsersAddToCard = client.db('brandShopBD').collection('UsersAddToCard');
 
-        app.get('/products', async(req, res) => {
+        app.get('/products', async (req, res) => {
             const cursor = brandShopCollections.find();
             const result = await cursor.toArray();
             res.send(result);
@@ -46,27 +47,46 @@ async function run() {
 
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: new ObjectId(id)};
+            const query = { _id: new ObjectId(id) };
             const result = await brandShopCollections.findOne(query);
             res.send(result);
         })
 
         app.put('/products/:id', async (req, res) => {
             const id = req.params.id;
-            const filter = {_id: new ObjectId(id)};
+            const filter = { _id: new ObjectId(id) };
             const options = { upsert: true };
             const updateProduct = req.body;
             console.log(updateProduct);
+            const product = {
+                $set: {
+                    name: updateProduct.name,
+                    brand: updateProduct.brand,
+                    type: updateProduct.type,
+                    price: updateProduct.price,
+                    description: updateProduct.description,
+                    rating: updateProduct.rating,
+                    image: updateProduct.image
+                }
+            };
+            const result = await brandShopCollections.updateOne(filter, product, options);
+            res.send(result)
         })
 
-        app.post('/products', async(req, res) => {
+        app.post('/products', async (req, res) => {
             const newProduct = req.body;
             console.log(newProduct);
             const result = await brandShopCollections.insertOne(newProduct);
             res.send(result)
         })
 
-        
+        app.post('/addToCard/', async (req, res) => {
+            const addToCard = req.body;
+            const result = await brandShopUsersAddToCard.insertOne(addToCard);
+            res.send(result);
+        })
+
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
