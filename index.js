@@ -52,6 +52,13 @@ async function run() {
             res.send(result);
         })
 
+        app.get('/addToCard', async (req, res) => {
+            const  cursor = brandShopUsersAddToCard.find();
+            const result = await cursor.toArray()
+            res.send(result);
+           
+        })
+
         app.put('/products/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: new ObjectId(id) };
@@ -80,7 +87,7 @@ async function run() {
             res.send(result)
         })
 
-        app.post('/addToCard/', async (req, res) => {
+        app.post('/addToCard', async (req, res) => {
             const addToCard = req.body;
             const result = await brandShopUsersAddToCard.insertOne(addToCard);
             res.send(result);
