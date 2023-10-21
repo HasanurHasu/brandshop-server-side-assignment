@@ -9,17 +9,6 @@ app.use(cors());
 app.use(express.json());
 
 
-// DB_USER=brandShopMaster
-// DB_PASS=19EJRImILgZEYXGH
-
-// node_modules
-// .env
-
-// brandShopMaster
-// 19EJRImILgZEYXGH
-
-
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7dcoggr.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
